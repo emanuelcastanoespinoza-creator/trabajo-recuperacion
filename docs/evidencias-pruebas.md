@@ -65,9 +65,26 @@ Salida de la consola:
    ```
 5. Tickets en la base: **3** → datos recuperados.
 
-## 3. Pruebas en el navegador
+## 3. Pruebas en el navegador (Chrome)
 
-_(Agrega aquí tus capturas: login fallido, vista de cada rol, bitácora del admin, etc.)_
+Capturas en [docs/capturas](capturas/).
+
+| Captura | Prueba | Resultado |
+|---|---|---|
+| 01-login | Pantalla de inicio de sesión | — |
+| 02-login-fallido | Contraseña incorrecta | "Credenciales inválidas" |
+| 03-inyeccion-sql-login | `' OR 1=1 --` en el login | Rechazado (400), sin sesión |
+| 04-usuario-sus-tickets | Rol usuario | Solo ve sus tickets, sin botones de estado ni eliminar |
+| 05-usuario-crea-ticket | Usuario crea un ticket | Ticket creado |
+| 06-usuario-ruta-admin-403 | Usuario pide `/api/usuarios` | 403 |
+| 07-usuario-ticket-ajeno-403 | Usuario pide el ticket 3 (de otra persona) | 403 |
+| 08-usuario-cambiar-estado-403 | Usuario cambia estado | 403 |
+| 09-tecnico-cambia-estado | Rol técnico | Ve todos los tickets y cambia el estado |
+| 10-tecnico-eliminar-403 | Técnico elimina un ticket | 403 |
+| 11-sin-token-401 | Petición sin token | 401 |
+| 12-token-falso-401 | Token falsificado con rol admin | 401 |
+| 13-admin-usuarios-bitacora | Rol admin | Ve usuarios y la bitácora con `LOGIN_FALLIDO`, `ACCESO_DENEGADO`, `TOKEN_INVALIDO` |
+| 14-fuerza-bruta-bloqueada | Intentos de login fallidos seguidos | Después de 5 fallos: 429 "Demasiados intentos" |
 
 ## 4. Hallazgos y correcciones
 

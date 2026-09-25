@@ -11,10 +11,11 @@ const { validarUsuario, validarLogin } = require('../utils/validar');
 
 const router = express.Router();
 
-// Contra fuerza bruta: máximo N intentos de login por IP cada 15 minutos.
+// Contra fuerza bruta: máximo N intentos FALLIDOS de login por IP cada 15 minutos.
 const limitarLogin = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: config.loginMaxAttempts,
+  skipSuccessfulRequests: true, // los logins correctos no cuentan
   handler: (req, res) => {
     logEvent('LOGIN_BLOQUEADO', { ip: req.ip, detalle: 'Demasiados intentos' });
     res.status(429).json({ error: 'Demasiados intentos. Intenta de nuevo en 15 minutos.' });
