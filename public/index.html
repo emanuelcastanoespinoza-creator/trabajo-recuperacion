@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureDesk ADSO</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header>
+    <h1>SecureDesk ADSO</h1>
+    <div id="sesion" hidden>
+      <span id="quien"></span>
+      <button id="btnSalir">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- LOGIN -->
+    <section id="vistaLogin" class="tarjeta">
+      <h2>Iniciar sesión</h2>
+      <form id="formLogin">
+        <label>Email <input type="email" id="loginEmail" required></label>
+        <label>Contraseña <input type="password" id="loginPassword" required></label>
+        <button type="submit">Entrar</button>
+      </form>
+      <p class="mensaje" id="msgLogin"></p>
+      <p class="ayuda">Usuarios de prueba: admin@securedesk.local, tecnico@securedesk.local, usuario@securedesk.local</p>
+    </section>
+
+    <!-- APLICACIÓN -->
+    <section id="vistaApp" hidden>
+      <div class="tarjeta">
+        <h2>Nuevo ticket</h2>
+        <form id="formTicket">
+          <label>Título <input id="ticketTitulo" required></label>
+          <label>Descripción <textarea id="ticketDescripcion" required></textarea></label>
+          <label>Prioridad
+            <select id="ticketPrioridad">
+              <option value="baja">baja</option>
+              <option value="media" selected>media</option>
+              <option value="alta">alta</option>
+            </select>
+          </label>
+          <button type="submit">Crear ticket</button>
+        </form>
+        <p class="mensaje" id="msgTicket"></p>
+      </div>
+
+      <div class="tarjeta">
+        <h2>Tickets</h2>
+        <table>
+          <thead><tr><th>ID</th><th>Título</th><th>Prioridad</th><th>Estado</th><th>Acciones</th></tr></thead>
+          <tbody id="tablaTickets"></tbody>
+        </table>
+      </div>
+
+      <!-- Solo visible para admin -->
+      <div class="tarjeta" id="panelAdmin" hidden>
+        <h2>Usuarios (admin)</h2>
+        <table>
+          <thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th></tr></thead>
+          <tbody id="tablaUsuarios"></tbody>
+        </table>
+        <h2>Bitácora de seguridad (admin)</h2>
+        <table>
+          <thead><tr><th>Fecha</th><th>Evento</th><th>Email</th><th>Detalle</th></tr></thead>
+          <tbody id="tablaLogs"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
