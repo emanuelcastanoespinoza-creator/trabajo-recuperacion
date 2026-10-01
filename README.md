@@ -4,8 +4,8 @@ Mesa de ayuda (sistema de tickets de soporte) construida para demostrar controle
 autenticación con **JWT**, contraseñas con **Bcrypt**, control de acceso por roles (**RBAC**),
 validación de entradas, consultas parametrizadas, registro de eventos y **backup / restauración**.
 
-- **Repositorio:** _(pega aquí el enlace de GitHub)_
-- **Video:** _(pega aquí el enlace de YouTube)_
+- **Repositorio:** https://github.com/emanuelcastanoespinoza-creator/trabajo-recuperacion
+- **Video:** https://youtu.be/juc4eVHM9hE
 - **Fecha de sustentación:** _(fecha)_
 
 ## Tecnologías
@@ -23,8 +23,8 @@ validación de entradas, consultas parametrizadas, registro de eventos y **backu
 ## Instalación
 
 ```bash
-git clone <url-del-repositorio>
-cd securedesk-adso
+git clone https://github.com/emanuelcastanoespinoza-creator/trabajo-recuperacion.git
+cd trabajo-recuperacion
 npm install
 cp .env.example .env          # en Windows: copy .env.example .env
 ```

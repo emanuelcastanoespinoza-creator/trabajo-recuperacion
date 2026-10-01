@@ -1,26 +1,19 @@
-01-login.png — Pantalla de inicio de sesión
-02-login-fallido.png — Contraseña incorrecta: mensaje genérico "Credenciales inválidas"
-03-inyeccion-sql-login.png — Inyección SQL ' OR 1=1 -- rechazada
-04-usuario-sus-tickets.png — Rol usuario: solo ve sus propios tickets, sin cambiar estado ni eliminar
-05-usuario-crea-ticket.png — Rol usuario crea un ticket
-   resultado: 403
-06-usuario-ruta-admin-403.png — Rol usuario intenta ruta de admin: 403
-   resultado: 403
-07-usuario-ticket-ajeno-403.png — Rol usuario intenta ver un ticket ajeno: 403
-   resultado: 403
-08-usuario-cambiar-estado-403.png — Rol usuario intenta cambiar estado: 403
-09-tecnico-cambia-estado.png — Rol técnico ve todos los tickets y cambia el estado
-   resultado: 403
-10-tecnico-eliminar-403.png — Rol técnico intenta eliminar: 403
-   resultado: 401
-11-sin-token-401.png — Petición sin token: 401
-   resultado: 401
-12-token-falso-401.png — Token falsificado: 401
-13-admin-usuarios-bitacora.png — Rol admin: gestión de usuarios y bitácora con LOGIN_FALLIDO, ACCESO_DENEGADO, TOKEN_INVALIDO
-   Intento 1 → HTTP 401 {"error":"Credenciales inválidas"}
-   Intento 2 → HTTP 401 {"error":"Credenciales inválidas"}
-   Intento 3 → HTTP 401 {"error":"Credenciales inválidas"}
-   Intento 4 → HTTP 429 {"error":"Demasiados intentos. Intenta de nuevo en 15 minutos."}
-   Intento 5 → HTTP 429 {"error":"Demasiados intentos. Intenta de nuevo en 15 minutos."}
-   Intento 6 → HTTP 429 {"error":"Demasiados intentos. Intenta de nuevo en 15 minutos."}
-14-fuerza-bruta-bloqueada.png — Después de 5 intentos fallidos el login se bloquea (429)
+Capturas de las pruebas de seguridad (SecureDesk ADSO)
+
+Navegador (interfaz web):
+01-login.png                      Pantalla de inicio de sesión
+02-login-fallido.png              Contraseña incorrecta: mensaje genérico "Credenciales inválidas"
+03-inyeccion-sql-login.png        Inyección SQL ' OR 1=1 -- en el email: rechazada por validación
+04-usuario-sus-tickets.png        Rol usuario: solo ve sus propios tickets, sin cambiar estado ni eliminar
+05-usuario-crea-ticket.png        Rol usuario crea un ticket
+09-tecnico-cambia-estado.png      Rol técnico: ve todos los tickets y cambia el estado
+13-admin-usuarios-bitacora.png    Rol admin: gestión de usuarios y bitácora (LOGIN_FALLIDO, ACCESO_DENEGADO, TOKEN_INVALIDO)
+
+Terminal (curl contra la API):
+06-usuario-ruta-admin-403.png     Usuario pide GET /api/usuarios (solo admin)       -> 403
+07-usuario-ticket-ajeno-403.png   Usuario pide GET /api/tickets/3 (de otra persona) -> 403
+08-usuario-cambiar-estado-403.png Usuario hace PATCH /api/tickets/1/estado          -> 403
+10-tecnico-eliminar-403.png       Técnico hace DELETE /api/tickets/1 (solo admin)   -> 403
+11-sin-token-401.png              GET /api/tickets sin token                        -> 401
+12-token-falso-401.png            Token firmado con otra clave que dice rol admin   -> 401
+14-fuerza-bruta-bloqueada.png     6 logins fallidos seguidos: 1 a 5 -> 401, el 6 -> 429 (bloqueado 15 min)
